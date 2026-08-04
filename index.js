@@ -1,14 +1,22 @@
 const express = require("express");
 const urlRoute = require("./routers/url.routes.js");
+const staticRoute = require("./routers/static.routes.js");
 const { connectDB } = require("./dbconnection.js");
 const URL = require("./models/url.models.js");
+const path = require("path");
 
 const app = express();
 const PORT = 5000;
 
+app.set("view engine", "ejs");
+app.set("views", path.resolve("./views"));
+
 // middlewares
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use("/url", urlRoute); // Forward all requests starting with "/url" to the URL router
+app.use("/", staticRoute);
+app.use(express.static("public"));
 
 app.get("/:shortId", async (req, res) => {
   const shortId = req.params.shortId;
