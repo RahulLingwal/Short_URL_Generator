@@ -100,3 +100,45 @@ tr:hover {
   background-color: #e9c46a;
   transition: 0.2s;
 }
+
+/* ------------------------- Signup Form ---------------------------- */
+.cont-padding {
+  padding: 8rem;
+}
+
+.main-cont {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.signup-cont {
+  width: 100%;
+}
+
+.signup-cont form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.signup-cont input {
+  padding: 0.5rem;
+  border-radius: 7px;
+  font-weight: 700;
+  width: 30%;
+  border-color: #264653;
+}
+
+.signup-cont button {
+  padding: 0.3rem;
+  border-radius: 7px;
+  font-weight: 700;
+  font-size: large;
+  width: 10%;
+  cursor: pointer;
+  background-color: #2a9d8f;
+  border-color: #264653;
+}
