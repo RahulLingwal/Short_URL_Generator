@@ -1,9 +1,15 @@
 const express = require("express");
-const urlRoute = require("./routers/url.routes.js");
-const staticRoute = require("./routers/static.routes.js");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+
 const { connectDB } = require("./dbconnection.js");
 const URL = require("./models/url.models.js");
-const path = require("path");
+const { requireAuth, checkAuth } = require("./middlewares/auth.middleware.js");
+
+const urlRoute = require("./routers/url.routes.js");
+const staticRoute = require("./routers/static.routes.js");
+const userRoute = require("./routers/user.routes.js");
+const redirectRoute = require("./routers/redirect.routes.js");
 
 const app = express();
 const PORT = 5000;
@@ -12,25 +18,16 @@ app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
 
 // middlewares
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use("/url", urlRoute); // Forward all requests starting with "/url" to the URL router
-app.use("/", staticRoute);
 app.use(express.static("public"));
 
-app.get("/:shortId", async (req, res) => {
-  const shortId = req.params.shortId;
-
-  const entry = await URL.findOneAndUpdate(
-    { shortId },
-    {
-      $push: {
-        visitedHistory: { timestamp: Date.now() },
-      },
-    },
-  );
-  res.redirect(entry.redirectURL);
-});
+// routes
+app.use("/url", requireAuth, urlRoute); // Forward all requests starting with "/url" to the URL router
+app.use("/", checkAuth, staticRoute);
+app.use("/user", userRoute);
+app.use("/", redirectRoute);
 
 // database connection
 connectDB("mongodb://localhost:27017/short-url")
