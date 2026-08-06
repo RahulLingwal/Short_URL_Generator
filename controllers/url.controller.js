@@ -16,14 +16,21 @@ async function getShortUrl(req, res) {
   return res.render("home", { id: shortId });
 }
 
-async function getAnalytics(req, res) {
+async function redirectToOriginalUrl(req, res) {
   const shortId = req.params.shortId;
-  const result = await URL.findOne({ shortId });
 
-  return res.json({
-    totalClicks: result.visitedHistory.length,
-    analytics: result.visitedHistory,
-  });
+  const entry = await URL.findOneAndUpdate(
+    { shortId },
+    {
+      $push: {
+        visitedHistory: {
+          timestamp: Date.now(),
+        },
+      },
+    },
+  );
+
+  res.redirect(entry.redirectURL);
 }
 
-module.exports = { getShortUrl, getAnalytics };
+module.exports = { getShortUrl, redirectToOriginalUrl };
