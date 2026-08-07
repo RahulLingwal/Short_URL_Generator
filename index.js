@@ -21,12 +21,12 @@ app.set("views", path.resolve("./views"));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 
 // routes
 app.use("/url", requireAuth, urlRoute); // Forward all requests starting with "/url" to the URL router
-app.use("/", checkAuth, staticRoute);
 app.use("/user", userRoute);
+app.use("/", checkAuth, staticRoute);
 app.use("/", redirectRoute);
 
 // database connection
