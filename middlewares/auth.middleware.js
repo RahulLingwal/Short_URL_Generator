@@ -2,10 +2,10 @@ const { getUser } = require("../services/auth.js");
 
 function requireAuth(req, res, next) {
   const userUid = req.cookies?.uid;
-  if (!useUid) return res.redirect("/user/login");
+  if (!userUid) return res.redirect("/login");
 
   const user = getUser(userUid);
-  if (!user) return res.redirect("/user/login");
+  if (!user) return res.redirect("/login");
 
   req.user = user;
   next();
