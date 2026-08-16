@@ -2,7 +2,6 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 
-const URL = require("./models/url.models.js");
 const { requireAuth, checkAuth } = require("./middlewares/auth.middleware.js");
 
 const urlRoute = require("./routers/url.routes.js");
@@ -19,7 +18,7 @@ app.set("views", path.resolve("./views"));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "../public")));
 
 // routes
 app.use("/url", requireAuth, urlRoute); // Forward all requests starting with "/url" to the URL router
