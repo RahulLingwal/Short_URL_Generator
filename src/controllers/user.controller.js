@@ -22,9 +22,15 @@ async function userLogin(req, res) {
     });
   }
 
-  const sessionId = uuidv4();
-  setUser(sessionId, user);
-  res.cookie("uid", sessionId);
+  // for Stateful Authentication
+  // const sessionId = uuidv4();
+  // setUser(sessionId, user);
+  // res.cookie("uid", sessionId);
+  // return res.redirect("/");
+
+  // for Stateless Authentication
+  const token = setUser(user);
+  res.cookie("uid", token);
   return res.redirect("/");
 }
 
