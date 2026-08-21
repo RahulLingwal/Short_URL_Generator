@@ -9,6 +9,17 @@ function requireAuth(req, res, next) {
 
   req.user = user;
   next();
+
+  // Authentication through headers
+  // const userUid = req.headers["authorization"];
+  // if (!userUid) return res.redirect("/login");
+  // const token = userUid.split("Bearer ")[1];
+
+  // const user = getUser(token);
+  // if (!user) return res.redirect("/login");
+
+  // req.user = user;
+  // next();
 }
 
 function checkAuth(req, res, next) {

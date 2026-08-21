@@ -34,6 +34,21 @@ async function userLogin(req, res) {
   return res.redirect("/");
 }
 
+// Authentication through headers
+// async function userLogin(req, res) {
+//   const { email, password } = req.body;
+//   const user = await User.findOne({ email, password });
+
+//   if (!user) {
+//     return res.render("login", {
+//       error: "Invalid Username or Password",
+//     });
+//   }
+
+//   const token = setUser(user);
+//   return res.json({ token });
+// }
+
 module.exports = {
   userSignup,
   userLogin,
